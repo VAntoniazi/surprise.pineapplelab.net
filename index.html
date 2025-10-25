@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para você 💙</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; }
+    body { font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'; }
+
+    /* Transições */
+    .fade-enter { opacity: 0; transform: translateY(14px) scale(0.98); }
+    .fade-enter-active { opacity: 1; transform: translateY(0) scale(1); transition: opacity 700ms ease, transform 700ms ease; }
+    .fade-exit { opacity: 1; transform: translateY(0) scale(1); }
+    .fade-exit-active { opacity: 0; transform: translateY(-14px) scale(0.98); transition: opacity 600ms ease, transform 600ms ease; }
+
+    /* Corações do fundo */
+    .heart { position: absolute; width: 10px; height: 10px; background: #ef4444; transform: rotate(45deg); animation: float 6s linear infinite; opacity: .25; }
+    .heart:before, .heart:after { content: ""; position: absolute; width: 10px; height: 10px; background: #ef4444; border-radius: 50%; }
+    .heart:before { left: -5px; }
+    .heart:after { top: -5px; }
+    @keyframes float {
+      0%   { transform: translateY(0) rotate(45deg); }
+      100% { transform: translateY(-120vh) rotate(45deg);}
+    }
+
+    .pulse { animation: pulseGlow 1.6s ease-in-out infinite; }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,.45);}
+      50%      { box-shadow: 0 0 0 18px rgba(99,102,241,0);}
+    }
+  </style>
+</head>
+<body class="min-h-full bg-gradient-to-b from-indigo-900 via-indigo-800 to-indigo-700 text-white">
+  <!-- BG Hearts -->
+  <div id="bg-hearts" class="pointer-events-none fixed inset-0 overflow-hidden"></div>
+
+  <main class="relative z-10 min-h-full flex items-center justify-center p-6">
+    <div class="max-w-3xl w-full">
+      <div class="text-center">
+        <div id="card" class="fade-enter bg-white/10 backdrop-blur rounded-3xl border border-white/20 shadow-2xl p-8 md:p-12">
+          <h1 id="text" class="text-2xl md:text-3xl font-semibold leading-relaxed whitespace-pre-line"></h1>
+          <div id="timer" class="mt-6 h-1 w-full bg-white/10 rounded overflow-hidden">
+            <div id="bar" class="h-full w-0 bg-indigo-400"></div>
+          </div>
+        </div>
+
+        <div id="cta" class="hidden mt-10 flex flex-col items-center gap-4">
+          <p class="text-lg opacity-90">Se a resposta for sim, clique em um dos botões 😍</p>
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <button class="pulse bg-white text-indigo-700 font-semibold px-6 py-3 rounded-full hover:scale-[1.03] active:scale-95 transition">SIM</button>
+            <button class="bg-indigo-200 text-indigo-900 font-semibold px-6 py-3 rounded-full hover:scale-[1.03] active:scale-95 transition">CLARO QUE SIM</button>
+            <button class="bg-pink-200 text-pink-900 font-semibold px-6 py-3 rounded-full hover:scale-[1.03] active:scale-95 transition">MIL VEZES SIM</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // --- utilidades ---
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    // BG hearts
+    const bg = document.getElementById('bg-hearts');
+    for (let i = 0; i < 24; i++) {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.bottom = Math.random() * 20 + 'vh';
+      h.style.animationDuration = (4 + Math.random() * 8) + 's';
+      h.style.opacity = (0.08 + Math.random() * 0.22);
+      h.style.transform = `rotate(45deg) scale(${0.6 + Math.random() * 1.2})`;
+      bg.appendChild(h);
+    }
+
+    // Blocos (português revisado e coeso)
+    const sequence = [
+     // BLOCO 1 (duas partes)
+{ text: 'Oi, meu bem! 💙', duration: 4000 },
+{ text: 'Desde o dia 10, temos vivido algo intenso e especial. A cada dia, descubro mais sobre você, e isso só me faz admirar ainda mais quem você é.', duration: 8500 },
+
+// BLOCO 2
+{ text: 'Sinto que nossa conexão não aconteceu por acaso. Foi algo que a vida, ou melhor, Deus, planejou com cuidado, porque é raro encontrar alguém que combina tanto com a gente.', duration: 7000 },
+
+// BLOCO 3
+{ text: 'Nossas histórias se cruzam em tantos detalhes… vivências parecidas, aprendizados difíceis e uma forma muito parecida de ver o mundo.', duration: 7000 },
+
+// BLOCO 4
+{ text: 'Compartilhamos o mesmo sonho de construir uma família, morar em um lugar tranquilo, ter uma casa espaçosa e criar filhos com os valores em que acreditamos.', duration: 9000 },
+
+// BLOCO 5
+{ text: 'E, claro, não dá pra esquecer o quanto somos parecidos até nas pequenas coisas, como o doces e salgados bem específicos! hahaha.', duration: 6000 },
+
+// BLOCO 6
+{ text: 'Acho que o doce que marcou a gente foi a Fini de bananinha kkkk, sem dúvidas.', duration: 6500 },
+{ text: 'Sem contar quando descobri que alguém tinha um humor tão quebrado quanto o meu.', duration: 6500 },
+{ text: 'E quando conversamos sobre cursos de graduação e descobrimos que os dois pensaram em Engenharia de Software… foi o ápice da coincidência.', duration: 7000 },
+
+// BLOCO 7
+{ text: 'Junto da sintonia emocional e dos objetivos de vida, também tivemos uma conexão física mútua. Alinhar todos esses pilares, em 2025, é quase impossível.', duration: 9000 },
+
+// BLOCO 8
+{ text: 'Mas, por sorte, foi o nosso caso. E eu espero que, a cada dia, a gente se descubra ainda mais, fortalecendo tudo o que estamos construindo.', duration: 7000 },
+
+// BLOCO 9
+{ text: 'Depois de tudo isso, chegou a hora de fazer uma pergunta muito importante.', duration: 6000 },
+
+// BLOCO 10 — Pedido
+{ text: 'Isadora de Lima Faleiro,\nVocê aceita namorar comigo? 💍', duration: 12000 },
+
+    ];
+
+    const card   = document.getElementById('card');
+    const textEl = document.getElementById('text');
+    const bar    = document.getElementById('bar');
+    const cta    = document.getElementById('cta');
+
+    async function showBlock(content, ms) {
+      // prepara barra
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+      void bar.offsetWidth;
+      bar.style.transition = `width ${ms}ms linear`;
+      bar.style.width = '100%';
+
+      // entra
+      textEl.innerText = content;
+      card.classList.remove('fade-exit','fade-exit-active');
+      card.classList.add('fade-enter');
+      void card.offsetWidth;
+      card.classList.add('fade-enter-active');
+
+      await sleep(ms);
+
+      // sai
+      card.classList.remove('fade-enter','fade-enter-active');
+      card.classList.add('fade-exit');
+      void card.offsetWidth;
+      card.classList.add('fade-exit-active');
+      await sleep(650); // tempo da saída
+
+      // pausa entre blocos (1.5s)
+      await sleep(1500);
+    }
+
+    async function runStory() {
+      for (let i = 0; i < sequence.length; i++) {
+        await showBlock(sequence[i].text, sequence[i].duration);
+      }
+      cta.classList.remove('hidden');
+      // redireciona qualquer opção para imagem.jpg
+      document.querySelectorAll('#cta button').forEach(btn => {
+        btn.addEventListener('click', () => { window.location.href = 'imagem.jpeg'; }, { once: true });
+      });
+    }
+
+    // inicia automaticamente (sem música)
+    document.addEventListener('DOMContentLoaded', runStory);
+  </script>
+</body>
+</html>
